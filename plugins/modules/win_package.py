@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright: (c) 2014, Trond Hindenes <trond@hindenes.com>, and others
+# Copyright: (c) 2026, Aleksei Funtikov (@afuntikov)
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 DOCUMENTATION = r'''
@@ -59,6 +60,13 @@ options:
       - sha512
     default: sha1
     version_added: 2.8.0
+  authenti_code_signature:
+    description:
+    - When set to true, validates the Authenticode signature of the installer file before executing it.
+    - The task will fail if the signature status returned by Get-AuthenticodeSignature is not Valid.
+    - When set to false, no Authenticode validation is performed.
+    type: bool
+    default: false   
   creates_path:
     description:
     - Will check the existence of the path specified and use the result to
@@ -212,6 +220,7 @@ seealso:
 author:
 - Trond Hindenes (@trondhindenes)
 - Jordan Borean (@jborean93)
+- Aleksei Funtikov (@afuntikov)
 '''
 
 EXAMPLES = r'''
@@ -357,6 +366,13 @@ EXAMPLES = r'''
   ansible.windows.win_package:
     product_id: InputApp
     state: absent
+
+- name: Install 7-Zip with Authenticode signature validation
+  ansible.windows.win_package:
+    path: C:\temp\7z.exe
+    arguments: /S
+    state: present
+    authenti_code_signature: true       
 '''
 
 RETURN = r'''
@@ -366,6 +382,20 @@ checksum:
   type: str
   version_added: 2.8.0
   sample: 6E642BB8DD5C2E027BF21DD923337CBB4214F827
+AuthenticodeSignature:
+  description:
+  - Details about the Authenticode signature validation when authenti_code_signature=true.
+  returned: when authenti_code_signature is true
+  type: dict
+  contains:
+    enabled:
+      description: Whether Authenticode validation was enabled.
+      type: bool
+      sample: true
+    status:
+      description: The Authenticode signature status returned by Get-AuthenticodeSignature.
+      type: str
+      sample: Valid 
 log:
   description: The contents of the MSI or MSP log.
   returned: installation/uninstallation failure for MSI or MSP packages
