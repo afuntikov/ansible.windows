@@ -64,7 +64,7 @@ options:
     description:
     - When set to V(True), validates the Authenticode signature of the installer file before executing it.
     - The task will fail if the signature status returned by Get-AuthenticodeSignature is not Valid.
-    - When set to false, no Authenticode validation is performed.
+    - When set to V(False), no Authenticode validation is performed.
     type: bool
     default: false
     version_added: '3.4.0'
