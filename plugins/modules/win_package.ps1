@@ -2,7 +2,6 @@
 
 # Copyright: (c) 2014, Trond Hindenes <trond@hindenes.com>, and others
 # Copyright: (c) 2017, Ansible Project
-# Copyright: (c) 2026, Aleksei Funtikov (@afuntikov)
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 #AnsibleRequires -CSharpUtil Ansible.Basic
@@ -1414,7 +1413,7 @@ try {
             catch {
                 $module.FailJson("Authenticode check failed: $($_.Exception.Message)")
             }
-        }        
+        }
         $setParams = @{
             Arguments = $arguments
             ReturnCodes = $expectedReturnCode
