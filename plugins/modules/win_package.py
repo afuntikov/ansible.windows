@@ -66,7 +66,7 @@ options:
     - The task will fail if the signature status returned by Get-AuthenticodeSignature is not Valid.
     - When set to false, no Authenticode validation is performed.
     type: bool
-    default: false   
+    default: false
   creates_path:
     description:
     - Will check the existence of the path specified and use the result to
@@ -297,7 +297,6 @@ EXAMPLES = r'''
     path: C:\temp\rdcman.msi
     state: absent
 
-# 7-Zip exe doesn't use a guid for the Product ID
 - name: Install 7zip from a network share with specific credentials
   ansible.windows.win_package:
     path: \\domain\programs\7z.exe
@@ -372,7 +371,7 @@ EXAMPLES = r'''
     path: C:\temp\7z.exe
     arguments: /S
     state: present
-    authenti_code_signature: true       
+    authenti_code_signature: true
 '''
 
 RETURN = r'''
@@ -395,7 +394,7 @@ AuthenticodeSignature:
     status:
       description: The Authenticode signature status returned by Get-AuthenticodeSignature.
       type: str
-      sample: Valid 
+      sample: Valid
 log:
   description: The contents of the MSI or MSP log.
   returned: installation/uninstallation failure for MSI or MSP packages
