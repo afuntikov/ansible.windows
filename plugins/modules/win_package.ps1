@@ -1403,9 +1403,9 @@ try {
         if ($authenti_code_signature -and $state -eq 'present' -and $path) {
             try {
                 $sig = Get-AuthenticodeSignature -FilePath $path
-                 $module.Result.AuthenticodeSignature = @{
+                $module.Result.AuthenticodeSignature = @{
                     enabled = $true
-                    status  = $sig.Status.ToString()
+                    status = $sig.Status.ToString()
                 }
                 if ($sig.Status.ToString() -ne 'Valid') {
                     throw "File '$path': signature status is '$($sig.Status)', expected 'Valid'"
@@ -1414,10 +1414,7 @@ try {
             catch {
                 $module.FailJson("Authenticode check failed: $($_.Exception.Message)")
             }
-        }
-
-            
-            
+        }        
         $setParams = @{
             Arguments = $arguments
             ReturnCodes = $expectedReturnCode
