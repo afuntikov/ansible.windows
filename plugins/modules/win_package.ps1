@@ -2,6 +2,7 @@
 
 # Copyright: (c) 2014, Trond Hindenes <trond@hindenes.com>, and others
 # Copyright: (c) 2017, Ansible Project
+# Copyright: (c) 2026, Aleksei Funtikov (@afuntikov)
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 #AnsibleRequires -CSharpUtil Ansible.Basic
@@ -1284,6 +1285,7 @@ $spec = @{
         chdir = @{ type = "path" }
         checksum = @{ type = 'str' }
         checksum_algorithm = @{ type = 'str'; default = 'sha1'; choices = @("md5", "sha1", "sha256", "sha384", "sha512") }
+        authenti_code_signature = @{ type = "bool"; default = $false }
         product_id = @{ type = "str" }
         state = @{
             type = "str"
@@ -1314,6 +1316,7 @@ $path = $module.Params.path
 $chdir = $module.Params.chdir
 $checksum = $module.Params.checksum
 $checksum_algorithm = $module.Params.checksum_algorithm
+$authenti_code_signature = $module.Params.authenti_code_signature
 $productId = $module.Params.product_id
 $state = $module.Params.state
 $createsPath = $module.Params.creates_path
@@ -1397,6 +1400,24 @@ try {
             }
         }
 
+        if ($authenti_code_signature -and $state -eq 'present' -and $path) {
+            try {
+                $sig = Get-AuthenticodeSignature -FilePath $path
+                 $module.Result.AuthenticodeSignature = @{
+                    enabled = $true
+                    status  = $sig.Status.ToString()
+                }
+                if ($sig.Status.ToString() -ne 'Valid') {
+                    throw "File '$path': signature status is '$($sig.Status)', expected 'Valid'"
+                }
+            }
+            catch {
+                $module.FailJson("Authenticode check failed: $($_.Exception.Message)")
+            }
+        }
+
+            
+            
         $setParams = @{
             Arguments = $arguments
             ReturnCodes = $expectedReturnCode
