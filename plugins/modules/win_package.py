@@ -67,6 +67,7 @@ options:
     - When set to false, no Authenticode validation is performed.
     type: bool
     default: false
+    version_added: '3.4.0'
   creates_path:
     description:
     - Will check the existence of the path specified and use the result to
