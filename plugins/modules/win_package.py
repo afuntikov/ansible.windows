@@ -371,7 +371,7 @@ EXAMPLES = r'''
     path: C:\temp\7z.exe
     arguments: /S
     state: present
-    authenti_code_signature: true
+    verify_signature: true
 '''
 
 RETURN = r'''
