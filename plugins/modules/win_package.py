@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Copyright: (c) 2014, Trond Hindenes <trond@hindenes.com>, and others
-# Copyright: (c) 2026, Aleksei Funtikov (@afuntikov)
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 DOCUMENTATION = r'''
